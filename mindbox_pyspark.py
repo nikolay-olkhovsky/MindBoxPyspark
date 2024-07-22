@@ -5,7 +5,11 @@ import pandas as pd
 import random
 
 NUMBER_OF_CONNECTIONS = 12
-
+'''
+При помощи фейкеров формирую три датафрейма:
+продукты, категории, связи (промежуточная таблица)
+для организации связи "многие-ко-многим"
+'''
 fake = Faker()
 fake.add_provider(faker_commerce.Provider)
 
@@ -47,6 +51,18 @@ connections = pd.DataFrame({
 #print(conn_product_ids)
 #print(conn_category_ids)
 
+'''
+При установке Спарка пришлось изрядно озадачиться. Попытался установить
+под Windows, и уже после установки самого Спарка выяснил, что под него
+нужно ставить Hadoop, который без танцев с бубном на Винде работать не
+будет. В результате текст, который вы сейчас читаете написан в Linux
+Ubuntu, запущенной в VM Virtual Box, где все встало и заработало без
+дополнительного шаманства.
+
+Задание оказалось интереснее, чем казалось. Фактически решение умещается
+в 4 строки (74, 75, 79 и 80). Но вот пока я их запускал, узнал много
+интересного.
+'''
 spark = SparkSession.builder.appName("mindmap").getOrCreate()
 
 products = spark.createDataFrame(products)
